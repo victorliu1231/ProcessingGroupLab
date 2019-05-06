@@ -22,7 +22,7 @@ class Rock extends Thing {
   }
 
   void display() {
-    /* ONE PERSON WRITE THIS */
+    image(loadImage("rock.png"),x,y,50,50);
   }
 }
 
