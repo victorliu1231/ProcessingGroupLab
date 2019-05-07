@@ -30,26 +30,28 @@ class Rock extends Thing {
 public class LivingRock extends Rock implements Moveable {
   int[] path1X = new int[]{10, 10, 0, -10, -10, -10, 0, 10};
   int[] path1Y = new int[]{0, -10, -10, -10, 0, 10, 10, 10};
+  int[] path2X = new int[]{0,1,1,0,-1,1,1,0,1,-1,0,-1,-1,1,0,1,1};
+  int[] path2Y = new int[]{1,1,0,1,0,-1,1,-1,-1,-1,1,-1,-1,0,-1,1,-1};
   int counter = 0;
   LivingRock(float x, float y) {
     super(x, y);
   }
   void move() {
-    int xIncr = path1X[counter];
-    int yIncr = path1Y[counter];
-    if (x >= width) {
+    int xIncr = path2X[counter] * 10;
+    int yIncr = path2Y[counter] * 10;
+    if (x + xIncr >= width) {
       xIncr *= -1;
-    } else if (x <= 0) {
+    } else if (x + xIncr <= 0) {
       xIncr *= 1;
     }
-    if (y >= height) {
+    if (y + yIncr >= height) {
       yIncr *= -1;
-    } else if (y <= 0) {
+    } else if (y + yIncr <= 0) {
       yIncr *= 1;
     }
     x += xIncr;
     y += yIncr;
-    if (counter == 7){
+    if (counter == path2X.length -1){
       counter = 0;
     } else {
       counter++;
