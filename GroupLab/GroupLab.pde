@@ -28,30 +28,39 @@ class Rock extends Thing {
 }
 
 public class LivingRock extends Rock implements Moveable {
+  int[] path1X = new int[]{10, 10, 0, -10, -10, -10, 0, 10};
+  int[] path1Y = new int[]{0, -10, -10, -10, 0, 10, 10, 10};
+  int counter = 0;
   LivingRock(float x, float y) {
     super(x, y);
   }
   void move() {
-    float xIncr = random(-3, 3);
-    float yIncr = random(-3, 3);
-    if (x >= 1000) {
-      xIncr = -1;
+    int xIncr = path1X[counter];
+    int yIncr = path1Y[counter];
+    if (x >= width) {
+      xIncr *= -1;
     } else if (x <= 0) {
-      xIncr = 1;
+      xIncr *= 1;
     }
-    if (y >= 800) {
-      yIncr = -1;
+    if (y >= height) {
+      yIncr *= -1;
     } else if (y <= 0) {
-      yIncr = 1;
+      yIncr *= 1;
     }
     x += xIncr;
     y += yIncr;
+    if (counter == 7){
+      counter = 0;
+    } else {
+      counter++;
+    }
   }
 }
 
 class Ball extends Thing implements Moveable {
   float[] col = {random(255), random(255), random(255)};
   String val = "";
+  PImage ball = loadImage("bball.png");
   Ball(float x, float y) {
 
     super(x, y);
@@ -65,21 +74,21 @@ class Ball extends Thing implements Moveable {
       ellipse(x, y, 45, 50);
     }
     if (val.equals("Image")) {
-      image(loadImage("bball.png"), x, y, 50, 50);
+      image(ball, x, y, 50, 50);
     }
   }
 
   void move() {
-    float xinc = random(5);
-    float yinc = random(5);
+    float xinc = random(-5, 5);
+    float yinc = random(-5, 5);
     if (x > width) 
-    xinc *= -1;
+      xinc *= -1;
     if (x < 0) 
-    xinc *= -1;
+      xinc *= -1;
     if (y > height) 
-    yinc *= -1;
+      yinc *= -1;
     if (y < 0) 
-    yinc *= -1;
+      yinc *= -1;
     x += xinc;
     y += yinc;
   }
@@ -98,6 +107,8 @@ void setup() {
   for (int i = 0; i < 10; i++) {
     Ball b = new Ball(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(b);
+    if (random(2) <= 1) b.val = "Simple";
+    else b.val = "Image";
     thingsToMove.add(b);
     Rock r = new Rock(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(r);
