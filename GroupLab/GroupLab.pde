@@ -61,8 +61,8 @@ class Ball extends Thing implements Moveable {
   }
 
   void move() {
-    float xinc = random(-1, 1);
-    float yinc = random(-1, 1);
+    float xinc = random(-5, 5);
+    float yinc = random(-5, 5);
     if (x > width) 
       xinc *= -1;
     if (x < 0) 
