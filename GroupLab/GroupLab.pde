@@ -28,27 +28,31 @@ class Rock extends Thing {
 }
 
 public class LivingRock extends Rock implements Moveable {
+  int[] path1X = new int[]{10, 10, 0, -10, -10, -10, 0, 10};
+  int[] path1Y = new int[]{0, -10, -10, -10, 0, 10, 10, 10};
+  int counter = 0;
   LivingRock(float x, float y) {
     super(x, y);
   }
   void move() {
-    int[] pathX = new int[]{10, 10, 0, -10, -10, -10, 0, 10};
-    int[] pathY = new int[]{0, -10, -10, -10, 0, 10, 10, 10};
-    for (int i = 0; i < 8; i++) {
-      int xIncr = pathX[i];
-      int yIncr = pathY[i];
-      if (x >= width) {
-        xIncr *= -1;
-      } else if (x <= 0) {
-        xIncr *= 1;
-      }
-      if (y >= height) {
-        yIncr *= -1;
-      } else if (y <= 0) {
-        yIncr *= 1;
-      }
-      x += xIncr;
-      y += yIncr;
+    int xIncr = path1X[counter];
+    int yIncr = path1Y[counter];
+    if (x >= width) {
+      xIncr *= -1;
+    } else if (x <= 0) {
+      xIncr *= 1;
+    }
+    if (y >= height) {
+      yIncr *= -1;
+    } else if (y <= 0) {
+      yIncr *= 1;
+    }
+    x += xIncr;
+    y += yIncr;
+    if (counter == 7){
+      counter = 0;
+    } else {
+      counter++;
     }
   }
 }
@@ -77,13 +81,13 @@ class Ball extends Thing implements Moveable {
     float xinc = random(5);
     float yinc = random(5);
     if (x > width) 
-    xinc *= -1;
+      xinc *= -1;
     if (x < 0) 
-    xinc *= -1;
+      xinc *= -1;
     if (y > height) 
-    yinc *= -1;
+      yinc *= -1;
     if (y < 0) 
-    yinc *= -1;
+      yinc *= -1;
     x += xinc;
     y += yinc;
   }
