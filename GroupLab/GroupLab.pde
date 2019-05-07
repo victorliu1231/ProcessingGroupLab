@@ -17,12 +17,13 @@ abstract class Thing implements Displayable {
 }
 
 class Rock extends Thing {
+  PImage rock = loadImage("rock.png");
   Rock(float x, float y) {
     super(x, y);
   }
 
   void display() {
-    image(loadImage("rock.png"), x, y, 50, 50);
+    image(rock, x, y, 50, 50);
   }
 }
 
