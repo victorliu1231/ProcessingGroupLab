@@ -52,6 +52,7 @@ public class LivingRock extends Rock implements Moveable {
 class Ball extends Thing implements Moveable {
   float[] col = {random(255), random(255), random(255)};
   String val = "";
+  PImage ball = loadImage("bball.png");
   Ball(float x, float y) {
 
     super(x, y);
@@ -65,13 +66,13 @@ class Ball extends Thing implements Moveable {
       ellipse(x, y, 45, 50);
     }
     if (val.equals("Image")) {
-      image(loadImage("bball.png"), x, y, 50, 50);
+      image(ball, x, y, 50, 50);
     }
   }
 
   void move() {
-    float xinc = random(5);
-    float yinc = random(5);
+    float xinc = random(-5, 5);
+    float yinc = random(-5, 5);
     if (x > width) 
     xinc *= -1;
     if (x < 0) 
@@ -98,6 +99,8 @@ void setup() {
   for (int i = 0; i < 10; i++) {
     Ball b = new Ball(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(b);
+    if (random(2) <= 1) b.val = "Simple";
+    else b.val = "Image";
     thingsToMove.add(b);
     Rock r = new Rock(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(r);
