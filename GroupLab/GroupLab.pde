@@ -17,9 +17,16 @@ abstract class Thing implements Displayable {
 }
 
 class Rock extends Thing {
-  PImage rock = loadImage("rock.png");
+  PImage rock;
   Rock(float x, float y) {
     super(x, y);
+    if((int)random(2) == 0) {
+      rock = loadImage("rock.png");
+    }
+    else {
+      rock = loadImage("stone.png");
+    }
+   
   }
 
   void display() {
