@@ -17,12 +17,13 @@ abstract class Thing implements Displayable {
 }
 
 class Rock extends Thing {
+  PImage rock = loadImage("rock.png");
   Rock(float x, float y) {
     super(x, y);
   }
 
   void display() {
-    image(loadImage("rock.png"), x, y, 50, 50);
+    image(rock, x, y, 50, 50);
   }
 }
 
@@ -53,28 +54,36 @@ public class LivingRock extends Rock implements Moveable {
 }
 
 class Ball extends Thing implements Moveable {
+  float[] col = {random(255), random(255), random(255)};
+  String val = "";
   Ball(float x, float y) {
 
     super(x, y);
   }
 
   void display() {
-    ellipseMode(CENTER);
-    fill(175, 0, 255);
-    ellipse(x, y, 50, 50);
+    if (val.equals("Simple")) {
+      ellipseMode(CENTER);
+      fill(col[0], col[1], col[2]);
+      ellipse(x, y, 50, 45);
+      ellipse(x, y, 45, 50);
+    }
+    if (val.equals("Image")) {
+      image(loadImage("bball.png"), x, y, 50, 50);
+    }
   }
 
   void move() {
-    float xinc = random(-5, 5);
-    float yinc = random(-5, 5);
+    float xinc = random(5);
+    float yinc = random(5);
     if (x > width) 
-      xinc *= -1;
+    xinc *= -1;
     if (x < 0) 
-      xinc *= -1;
+    xinc *= -1;
     if (y > height) 
-      yinc *= -1;
+    yinc *= -1;
     if (y < 0) 
-      yinc *= -1;
+    yinc *= -1;
     x += xinc;
     y += yinc;
   }
