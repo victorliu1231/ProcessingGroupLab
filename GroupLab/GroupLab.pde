@@ -22,7 +22,7 @@ class Rock extends Thing {
   }
 
   void display() {
-    image(loadImage("rock.png"),x,y,50,50);
+    image(loadImage("rock.png"), x, y, 50, 50);
   }
 }
 
@@ -31,16 +31,16 @@ public class LivingRock extends Rock implements Moveable {
     super(x, y);
   }
   void move() {
-    float xIncr = random(-1,1);
-    float yIncr = random(-1,1);
-    if (x >= 1000){
+    float xIncr = random(-3, 3);
+    float yIncr = random(-3, 3);
+    if (x >= 1000) {
       xIncr = -1;
-    } else if (x <= 0){
+    } else if (x <= 0) {
       xIncr = 1;
     }
-    if (y >= 800){
+    if (y >= 800) {
       yIncr = -1;
-    } else if (y <= 0){
+    } else if (y <= 0) {
       yIncr = 1;
     }
     x += xIncr;
@@ -61,8 +61,18 @@ class Ball extends Thing implements Moveable {
   }
 
   void move() {
-    float xint = random(-1,1);
-    float yint = random(-1,1);
+    float xinc = random(-1, 1);
+    float yinc = random(-1, 1);
+    if (x > width) 
+      xinc *= -1;
+    if (x < 0) 
+      xinc *= -1;
+    if (y > height) 
+      yinc *= -1;
+    if (y < 0) 
+      yinc *= -1;
+    x += xinc;
+    y += yinc;
   }
 }
 
