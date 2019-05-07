@@ -20,13 +20,11 @@ class Rock extends Thing {
   PImage rock;
   Rock(float x, float y) {
     super(x, y);
-    if((int)random(2) == 0) {
+    if ((int)random(2) == 0) {
       rock = loadImage("rock.png");
-    }
-    else {
+    } else {
       rock = loadImage("stone.png");
     }
-   
   }
 
   void display() {
@@ -35,30 +33,46 @@ class Rock extends Thing {
 }
 
 public class LivingRock extends Rock implements Moveable {
-  int[] path1X = new int[]{10, 10, 0, -10, -10, -10, 0, 10};
-  int[] path1Y = new int[]{0, -10, -10, -10, 0, 10, 10, 10};
-  int[] path2X = new int[]{0,1,1,0,-1,1,1,0,1,-1,0,-1,-1,1,0,1,1};
-  int[] path2Y = new int[]{1,1,0,1,0,-1,1,-1,-1,-1,1,-1,-1,0,-1,1,-1};
+  int[] path1X = new int[]{1, 1, 0, -1, -1, -1, 0, 1};
+  int[] path1Y = new int[]{0, -1, -1, -1, 0, 1, 1, 1};
+  int[] path2X = new int[]{0, 1, 1, 0, -1, 1, 1, 0};
+  int[] path2Y = new int[]{1, 1, 0, 1, 0, -1, 1, -1};
+  int[] path3X = new int[]{-1, 0, -1, 0, -1, 1, -1, -1};
+  int[] path3Y = new int[]{1, 1, 0, -1, 1, 1, 1, 0};
+
+  int[][] allPathsX = new int[][]{path1X, path2X, path3X};
+  int[][] allPathsY = new int[][]{path1Y, path2Y, path3Y};
+  int[] randomPathX;
+  int[] randomPathY;
+  int randomNum;
+  int MODE;
+
   int counter = 0;
   LivingRock(float x, float y) {
     super(x, y);
+    randomNum = (int)random(3);
+    randomPathX = allPathsX[randomNum];
+    randomPathY = allPathsY[randomNum];
+    MODE = 0;
   }
   void move() {
-    int xIncr = path2X[counter] * 10;
-    int yIncr = path2Y[counter] * 10;
-    if (x + xIncr >= width) {
-      xIncr *= -1;
-    } else if (x + xIncr <= 0) {
-      xIncr *= 1;
+    int xIncr = randomPathX[counter] * (int)random(5);
+    int yIncr = randomPathX[counter] * (int)random(5);
+    if (x > width || x < 0) {
+      x += ((width - x) % 2)*(5);  
+      MODE = (MODE+1) % 2;
     }
-    if (y + yIncr >= height) {
+    if (y > height || y < 0) {
+      y += ((height - y) % 2)*(5);  
+      MODE = (MODE+1) % 2;
+    }
+    if (MODE == 1) {
+      xIncr *= -1;
       yIncr *= -1;
-    } else if (y + yIncr <= 0) {
-      yIncr *= 1;
     }
     x += xIncr;
     y += yIncr;
-    if (counter == path2X.length -1){
+    if (counter == randomPathX.length -1) {
       counter = 0;
     } else {
       counter++;
