@@ -5,9 +5,11 @@ interface Displayable {
 interface Moveable {
   void move();
 }
-/*interface Collideable {
+/*
+interface Collideable {
   boolean isTouching(Collideable x);
-}*/
+}
+*/
 
 abstract class Thing implements Displayable {
   float x, y;//Position of the Thing
@@ -96,7 +98,7 @@ public class LivingRock extends Rock implements Moveable {
   }
 }
 
-class Ball extends Thing implements Moveable, //Collideable 
+class Ball extends Thing implements Moveable//, Collideable 
 {
   float speedx = random(6);
   float speedy = random(6);
@@ -106,12 +108,15 @@ class Ball extends Thing implements Moveable, //Collideable
   Ball(float x, float y) {
     super(x, y);
   }
-/*
-  boolean isTouching(Collideable object) {
-    if (x == object.x && y == object.y) return true;
-    return false;
-  }
-  */
+  /*
+  boolean isTouching(Collideable object, float radius) {
+   //using radius to show that it's colliding.
+   if 
+   return true;
+   return false;
+   }
+   */
+
 
 
   void display() {
