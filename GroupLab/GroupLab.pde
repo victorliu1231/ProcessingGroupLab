@@ -48,7 +48,8 @@ public class LivingRock extends Rock implements Moveable {
   int[] randomPathX;
   int[] randomPathY;
   int randomNum;
-  int MODE;
+  int XMODE;
+  int YMODE;
 
   int counter = 0;
   LivingRock(float x, float y) {
@@ -63,14 +64,16 @@ public class LivingRock extends Rock implements Moveable {
     int yIncr = randomPathX[counter] * (int)random(5);
     if (x > width || x < 0) {
       x += ((width - x) % 2)*(5);  
-      MODE = (MODE+1) % 2;
+      XMODE = (XMODE+1) % 2;
     }
     if (y > height || y < 0) {
       y += ((height - y) % 2)*(5);  
-      MODE = (MODE+1) % 2;
+      YMODE = (YMODE+1) % 2;
     }
-    if (MODE == 1) {
+    if (XMODE == 1) {
       xIncr *= -1;
+    }
+    if (YMODE == 1){
       yIncr *= -1;
     }
     x += xIncr;
