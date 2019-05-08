@@ -5,9 +5,9 @@ interface Displayable {
 interface Moveable {
   void move();
 }
-//interface Collideable {
-// boolean isTouching(Collideable x);
-//}
+/*interface Collideable {
+  boolean isTouching(Collideable x);
+}*/
 
 abstract class Thing implements Displayable {
   float x, y;//Position of the Thing
@@ -19,11 +19,8 @@ abstract class Thing implements Displayable {
   abstract void display();
 }
 
-<<<<<<< HEAD
+
 class Rock extends Thing {
-=======
-class Rock extends Thing  {
->>>>>>> 7de5090a558f636df5c34e30560d17ed77f4ea37
   PImage rock = loadImage("rock.png");
   PImage stone = loadImage("stone.png");
   PImage img;
@@ -102,7 +99,8 @@ public class LivingRock extends Rock implements Moveable {
   }
 }
 
-class Ball extends Thing implements Moveable{//Collideable {
+class Ball extends Thing implements Moveable, //Collideable 
+{
   float speedx = random(6);
   float speedy = random(6);
   float[] col = {random(255), random(255), random(255)};
@@ -111,17 +109,14 @@ class Ball extends Thing implements Moveable{//Collideable {
   Ball(float x, float y) {
     super(x, y);
   }
-<<<<<<< HEAD
-  // boolean isTouching(Collideable object) {
-  //  if (x == object.x && y == object.y) return true;
-  // return false;
-  //}
-=======
+/*
   boolean isTouching(Collideable object) {
     if (x == object.x && y == object.y) return true;
     return false;
   }
->>>>>>> 7de5090a558f636df5c34e30560d17ed77f4ea37
+  */
+
+
   void display() {
     if (val.equals("Simple")) {
       ellipseMode(CENTER);
@@ -135,8 +130,6 @@ class Ball extends Thing implements Moveable{//Collideable {
   }
 
   void move() {
-    float xinc = random(-5, 5);
-    float yinc = random(-5, 5);
     x += speedx;
     y += speedy;
     if (x > width) 
@@ -147,8 +140,6 @@ class Ball extends Thing implements Moveable{//Collideable {
       speedy *= -1;
     if (y < 0) 
       speedy *= -1;
-    // x += xinc;
-    //y += yinc;
   }
 }
 
