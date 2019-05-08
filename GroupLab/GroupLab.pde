@@ -5,6 +5,9 @@ interface Displayable {
 interface Moveable {
   void move();
 }
+//interface Collideable {
+// boolean isTouching(Collideable x);
+//}
 
 abstract class Thing implements Displayable {
   float x, y;//Position of the Thing
@@ -16,7 +19,11 @@ abstract class Thing implements Displayable {
   abstract void display();
 }
 
+<<<<<<< HEAD
 class Rock extends Thing {
+=======
+class Rock extends Thing  {
+>>>>>>> 7de5090a558f636df5c34e30560d17ed77f4ea37
   PImage rock = loadImage("rock.png");
   PImage stone = loadImage("stone.png");
   PImage img;
@@ -24,11 +31,11 @@ class Rock extends Thing {
     super(x, y);
     if ((int)random(2) == 0) {
       img = rock;
-      
     } else {
       img = stone;
     }
   }
+
 
   void display() {
     image(img, x, y, 50, 50);
@@ -86,25 +93,35 @@ public class LivingRock extends Rock implements Moveable {
   }
   void display() {
     super.display();
-    fill(255,255,255);
-    ellipse(x+19,y+20,10,10);
-    ellipse(x+29,y+20,10,10);
-    fill(0,0,0);
-    ellipse(x+19+random(-4,4),y+20+random(-4,4),3,3);
-    ellipse(x+29+random(-4,4),y+20+random(-4,4),3,3);
+    fill(255, 255, 255);
+    ellipse(x+19, y+20, 10, 10);
+    ellipse(x+29, y+20, 10, 10);
+    fill(0, 0, 0);
+    ellipse(x+19+random(-4, 4), y+20+random(-4, 4), 3, 3);
+    ellipse(x+29+random(-4, 4), y+20+random(-4, 4), 3, 3);
   }
-  
 }
 
-class Ball extends Thing implements Moveable {
+class Ball extends Thing implements Moveable{//Collideable {
+  float speedx = random(6);
+  float speedy = random(6);
   float[] col = {random(255), random(255), random(255)};
   String val = "";
   PImage ball = loadImage("bball.png");
   Ball(float x, float y) {
-
     super(x, y);
   }
-
+<<<<<<< HEAD
+  // boolean isTouching(Collideable object) {
+  //  if (x == object.x && y == object.y) return true;
+  // return false;
+  //}
+=======
+  boolean isTouching(Collideable object) {
+    if (x == object.x && y == object.y) return true;
+    return false;
+  }
+>>>>>>> 7de5090a558f636df5c34e30560d17ed77f4ea37
   void display() {
     if (val.equals("Simple")) {
       ellipseMode(CENTER);
@@ -120,16 +137,18 @@ class Ball extends Thing implements Moveable {
   void move() {
     float xinc = random(-5, 5);
     float yinc = random(-5, 5);
+    x += speedx;
+    y += speedy;
     if (x > width) 
-      xinc *= -1;
+      speedx *= -1;
     if (x < 0) 
-      xinc *= -1;
+      speedx *= -1;
     if (y > height) 
-      yinc *= -1;
+      speedy *= -1;
     if (y < 0) 
-      yinc *= -1;
-    x += xinc;
-    y += yinc;
+      speedy *= -1;
+    // x += xinc;
+    //y += yinc;
   }
 }
 
