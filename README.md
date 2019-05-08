@@ -8,12 +8,10 @@ Victor- worked on rock move()
 Minjun- Worked on ball move()
 Isabella- Worked on ball display()
 
-
-
-
+day 2
 Jerry and Victor- working on day2 rock changes
 Minjun and Isabella - Working on day2 ball changes.
 
-Jerry and Victor - Working together to try to fix rock move
-so that it bounces off screen correctly (with Victor
-typing and Jerry thinking about the bug fix)
+day 3
+Minjun and Isabella- Finished the bouncing. 
+Isabella did the coding mainly and Minjun edited the code + helped out.
