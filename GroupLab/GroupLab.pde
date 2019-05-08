@@ -78,6 +78,16 @@ public class LivingRock extends Rock implements Moveable {
       counter++;
     }
   }
+  void display() {
+    super.display();
+    fill(255,255,255);
+    ellipse(x+19,y+20,10,10);
+    ellipse(x+29,y+20,10,10);
+    fill(0,0,0);
+    ellipse(x+19+random(-4,4),y+20+random(-4,4),3,3);
+    ellipse(x+29+random(-4,4),y+20+random(-4,4),3,3);
+  }
+  
 }
 
 class Ball extends Thing implements Moveable {
