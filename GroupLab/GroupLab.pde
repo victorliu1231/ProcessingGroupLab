@@ -19,7 +19,11 @@ abstract class Thing implements Displayable {
   abstract void display();
 }
 
+<<<<<<< HEAD
 class Rock extends Thing {
+=======
+class Rock extends Thing  {
+>>>>>>> 7de5090a558f636df5c34e30560d17ed77f4ea37
   PImage rock = loadImage("rock.png");
   PImage stone = loadImage("stone.png");
   PImage img;
@@ -31,6 +35,7 @@ class Rock extends Thing {
       img = stone;
     }
   }
+
 
   void display() {
     image(img, x, y, 50, 50);
@@ -101,13 +106,19 @@ class Ball extends Thing implements Moveable{//Collideable {
   String val = "";
   PImage ball = loadImage("bball.png");
   Ball(float x, float y) {
-
     super(x, y);
   }
+<<<<<<< HEAD
   // boolean isTouching(Collideable object) {
   //  if (x == object.x && y == object.y) return true;
   // return false;
   //}
+=======
+  boolean isTouching(Collideable object) {
+    if (x == object.x && y == object.y) return true;
+    return false;
+  }
+>>>>>>> 7de5090a558f636df5c34e30560d17ed77f4ea37
   void display() {
     if (val.equals("Simple")) {
       ellipseMode(CENTER);
