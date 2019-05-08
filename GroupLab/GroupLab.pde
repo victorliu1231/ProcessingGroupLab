@@ -5,6 +5,9 @@ interface Displayable {
 interface Moveable {
   void move();
 }
+interface Collideable {
+  boolean isTouching(Collideable x);
+}
 
 abstract class Thing implements Displayable {
   float x, y;//Position of the Thing
@@ -16,7 +19,7 @@ abstract class Thing implements Displayable {
   abstract void display();
 }
 
-class Rock extends Thing {
+class Rock extends Thing implements Collideable{
   PImage rock;
   Rock(float x, float y) {
     super(x, y);
@@ -90,7 +93,7 @@ public class LivingRock extends Rock implements Moveable {
   
 }
 
-class Ball extends Thing implements Moveable {
+class Ball extends Thing implements Moveable, Collideable {
   float[] col = {random(255), random(255), random(255)};
   String val = "";
   PImage ball = loadImage("bball.png");
@@ -98,7 +101,10 @@ class Ball extends Thing implements Moveable {
 
     super(x, y);
   }
-
+  boolean isTouching(Collideable object){
+    if (x == object.x && y == object.y) return true;
+    return false;
+  }
   void display() {
     if (val.equals("Simple")) {
       ellipseMode(CENTER);
