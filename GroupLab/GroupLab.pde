@@ -19,24 +19,19 @@ abstract class Thing implements Displayable {
   abstract void display();
 }
 
-<<<<<<< HEAD
-class Rock extends Thing implements Collideable{
-  PImage rock;
-=======
-class Rock extends Thing {
+class Rock extends Thing  {
   PImage rock = loadImage("rock.png");
   PImage stone = loadImage("stone.png");
   PImage img;
->>>>>>> adec98e535ef7bcebe33f827a36ffce40b2c6146
   Rock(float x, float y) {
     super(x, y);
     if ((int)random(2) == 0) {
       img = rock;
-      
     } else {
       img = stone;
     }
   }
+
 
   void display() {
     image(img, x, y, 50, 50);
@@ -91,14 +86,13 @@ public class LivingRock extends Rock implements Moveable {
   }
   void display() {
     super.display();
-    fill(255,255,255);
-    ellipse(x+19,y+20,10,10);
-    ellipse(x+29,y+20,10,10);
-    fill(0,0,0);
-    ellipse(x+19+random(-4,4),y+20+random(-4,4),3,3);
-    ellipse(x+29+random(-4,4),y+20+random(-4,4),3,3);
+    fill(255, 255, 255);
+    ellipse(x+19, y+20, 10, 10);
+    ellipse(x+29, y+20, 10, 10);
+    fill(0, 0, 0);
+    ellipse(x+19+random(-4, 4), y+20+random(-4, 4), 3, 3);
+    ellipse(x+29+random(-4, 4), y+20+random(-4, 4), 3, 3);
   }
-  
 }
 
 class Ball extends Thing implements Moveable, Collideable {
@@ -106,10 +100,9 @@ class Ball extends Thing implements Moveable, Collideable {
   String val = "";
   PImage ball = loadImage("bball.png");
   Ball(float x, float y) {
-
     super(x, y);
   }
-  boolean isTouching(Collideable object){
+  boolean isTouching(Collideable object) {
     if (x == object.x && y == object.y) return true;
     return false;
   }
