@@ -19,19 +19,27 @@ abstract class Thing implements Displayable {
   abstract void display();
 }
 
+<<<<<<< HEAD
 class Rock extends Thing implements Collideable{
   PImage rock;
+=======
+class Rock extends Thing {
+  PImage rock = loadImage("rock.png");
+  PImage stone = loadImage("stone.png");
+  PImage img;
+>>>>>>> adec98e535ef7bcebe33f827a36ffce40b2c6146
   Rock(float x, float y) {
     super(x, y);
     if ((int)random(2) == 0) {
-      rock = loadImage("rock.png");
+      img = rock;
+      
     } else {
-      rock = loadImage("stone.png");
+      img = stone;
     }
   }
 
   void display() {
-    image(rock, x, y, 50, 50);
+    image(img, x, y, 50, 50);
   }
 }
 
