@@ -24,7 +24,7 @@ abstract class Thing implements Displayable, Collideable {
   }
 }
 
-class Rock extends Thing{
+class Rock extends Thing {
   PImage rock = loadImage("rock.png");
   PImage stone = loadImage("stone.png");
   PImage img;
@@ -128,7 +128,7 @@ class Ball extends Thing implements Moveable {
       speedx *= -1;
     if (x < 0) 
       speedx *= -1;
-    if (y > height) 
+    if (y > height)
       speedy *= -1;
     if (y < 0) 
       speedy *= -1;
@@ -137,7 +137,7 @@ class Ball extends Thing implements Moveable {
         col[0] = 255;
         col[1] = 0;
         col[2] = 0;
-      }else if (dist(x, y, c.x, c.y) > 500){
+      } else if (dist(x, y, c.x, c.y) > 500) {
         col[0] = og0;
         col[1] = og1;
         col[2] = og2;
@@ -150,12 +150,28 @@ class Ball2 extends Ball implements Moveable {
   PImage ball = loadImage("bball.png");
   Ball2(float x, float y) {
     super(x, y);
+    speedy = random(2);
   }
   void display() {
     image(ball, x, y, 50, 50);
   }
   void move() {
-    super.move();
+    x += speedx;
+    y += speedy;
+    if (x > width) 
+      speedx *= -1;
+    if (x < 0) 
+      speedx *= -1;
+    if (y > height) {
+      speedy *= -1;
+    } else {
+      speedy += 1.5;
+    }
+    for (Thing c : thingsToCollide) {
+      if (isTouching(c) && this != c) {
+     //   speedy *= -.7;
+      }
+    }
   }
 }
 /*DO NOT EDIT THE REST OF THIS */
