@@ -5,13 +5,13 @@ interface Displayable {
 interface Moveable {
   void move();
 }
-/*
-interface Collideable {
-  boolean isTouching(Collideable x);
-}
-*/
 
-abstract class Thing implements Displayable {
+interface Collideable {
+  boolean isTouching(Thing other);
+}
+
+
+abstract class Thing implements Displayable, Collideable {
   float x, y;//Position of the Thing
 
   Thing(float x, float y) {
@@ -19,10 +19,10 @@ abstract class Thing implements Displayable {
     this.y = y;
   }
   abstract void display();
+  abstract boolean isTouching(Thing other);
 }
 
-
-class Rock extends Thing {
+class Rock extends Thing implements Collideable {
   PImage rock = loadImage("rock.png");
   PImage stone = loadImage("stone.png");
   PImage img;
@@ -33,6 +33,9 @@ class Rock extends Thing {
     } else {
       img = stone;
     }
+  }
+  boolean isTouching(Thing other) {
+    return dist(x, y, other.x, other.y) <= 10;
   }
 
 
@@ -63,7 +66,7 @@ public class LivingRock extends Rock implements Moveable {
     randomNum = (int)random(3);
     randomPathX = allPathsX[randomNum];
     randomPathY = allPathsY[randomNum];
-    MODE = 0;
+    // MODE = 0;
   }
   void move() {
     int xIncr = randomPathX[counter] * (int)random(5);
@@ -79,7 +82,7 @@ public class LivingRock extends Rock implements Moveable {
     if (XMODE == 1) {
       xIncr *= -1;
     }
-    if (YMODE == 1){
+    if (YMODE == 1) {
       yIncr *= -1;
     }
     x += xIncr;
@@ -101,13 +104,10 @@ public class LivingRock extends Rock implements Moveable {
   }
 }
 
-class Ball extends Thing implements Moveable//, Collideable 
-{
+class Ball extends Thing implements Moveable {
   float speedx = random(6);
   float speedy = random(6);
   float[] col = {random(255), random(255), random(255)};
-  String val = "";
-  PImage ball = loadImage("bball.png");
   Ball(float x, float y) {
     super(x, y);
   }
@@ -121,17 +121,14 @@ class Ball extends Thing implements Moveable//, Collideable
    */
 
 
-
+  boolean isTouching(Thing other) {
+    return dist(x, y, other.x, other.y) <= 10;
+  }
   void display() {
-    if (val.equals("Simple")) {
       ellipseMode(CENTER);
       fill(col[0], col[1], col[2]);
       ellipse(x, y, 50, 45);
       ellipse(x, y, 45, 50);
-    }
-    if (val.equals("Image")) {
-      image(ball, x, y, 50, 50);
-    }
   }
 
   void move() {
@@ -148,6 +145,18 @@ class Ball extends Thing implements Moveable//, Collideable
   }
 }
 
+class Ball2 extends Ball implements Moveable {
+  PImage ball = loadImage("bball.png");
+  Ball2(float x, float y) {
+    super(x, y);
+  }
+  void display() {
+    image(ball, x, y, 50, 50);
+  }
+  void move() {
+    super.move();
+  }
+}
 /*DO NOT EDIT THE REST OF THIS */
 
 ArrayList<Displayable> thingsToDisplay;
@@ -161,8 +170,6 @@ void setup() {
   for (int i = 0; i < 10; i++) {
     Ball b = new Ball(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(b);
-    if (random(2) <= 1) b.val = "Simple";
-    else b.val = "Image";
     thingsToMove.add(b);
     Rock r = new Rock(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(r);
