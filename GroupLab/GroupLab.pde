@@ -19,10 +19,12 @@ abstract class Thing implements Displayable, Collideable {
     this.y = y;
   }
   abstract void display();
-  abstract boolean isTouching(Thing other);
+  boolean isTouching(Thing other) {
+    return dist(x, y, other.x, other.y) < 150;
+  }
 }
 
-class Rock extends Thing implements Collideable {
+class Rock extends Thing{
   PImage rock = loadImage("rock.png");
   PImage stone = loadImage("stone.png");
   PImage img;
@@ -33,9 +35,6 @@ class Rock extends Thing implements Collideable {
     } else {
       img = stone;
     }
-  }
-  boolean isTouching(Thing other) {
-    return dist(x, y, other.x, other.y) <= 10;
   }
 
 
@@ -115,9 +114,6 @@ class Ball extends Thing implements Moveable {
     super(x, y);
   }
 
-  boolean isTouching(Thing other) {
-    return dist(x, y, other.x, other.y) <= 50;
-  }
   void display() {
     ellipseMode(CENTER);
     fill(col[0], col[1], col[2]);
@@ -141,7 +137,7 @@ class Ball extends Thing implements Moveable {
         col[0] = 255;
         col[1] = 0;
         col[2] = 0;
-      } else {
+      }else if (dist(x, y, c.x, c.y) > 500){
         col[0] = og0;
         col[1] = og1;
         col[2] = og2;
