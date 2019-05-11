@@ -158,10 +158,10 @@ class Ball2 extends Ball implements Moveable {
   void move() {
     x += speedx;
     y += speedy;
-    if (x > width) 
-      speedx *= -1;
+    if (x > width - 35) 
+      speedx *= -.98;
     if (x < 0) 
-      speedx *= -1;
+      speedx *= -.98;
     if (y > height - 40) {
       speedy *= -.98;
     } else {
@@ -169,7 +169,7 @@ class Ball2 extends Ball implements Moveable {
     }
     for (Thing c : thingsToCollide) {
       if (isTouching(c) && this != c) {
-        if((x - c.x > 0 && speedx < 0) || (x - c.x < 0 && speedx > 0)) speedx *= -1;
+        if((x - c.x > 0 && speedx < 0) || (x - c.x < 0 && speedx > 0)) speedx *= -.98;
         speedy = abs(y - c.y) * (speedy / (dist(x, y, c.x, c.y)));
       }
     }
