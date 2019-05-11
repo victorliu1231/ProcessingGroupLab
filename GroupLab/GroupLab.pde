@@ -150,7 +150,7 @@ class Ball2 extends Ball implements Moveable {
   PImage ball = loadImage("bball.png");
   Ball2(float x, float y) {
     super(x, y);
-    speedy = random(2);
+    speedy = 0;
   }
   void display() {
     image(ball, x, y, 50, 50);
@@ -162,15 +162,15 @@ class Ball2 extends Ball implements Moveable {
       speedx *= -1;
     if (x < 0) 
       speedx *= -1;
-    if (y > height) {
-      speedy *= -1;
+    if (y > height - 40) {
+      speedy *= -.98;
     } else {
       speedy += 1.5;
     }
     for (Thing c : thingsToCollide) {
       if (isTouching(c) && this != c) {
-     //   speedx = (x - c.x) * (speedx / (dist(x, y, c.x, c.y)));
-        speedy = (y - c.y) * (speedy / (dist(x, y, c.x, c.y)));
+        if((x - c.x > 0 && speedx < 0) || (x - c.x < 0 && speedx > 0)) speedx *= -1;
+        speedy = abs(y - c.y) * (speedy / (dist(x, y, c.x, c.y)));
       }
     }
   }
