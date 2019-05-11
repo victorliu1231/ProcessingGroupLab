@@ -20,7 +20,7 @@ abstract class Thing implements Displayable, Collideable {
   }
   abstract void display();
   boolean isTouching(Thing other) {
-    return dist(x, y, other.x, other.y) < 150;
+    return dist(x, y, other.x, other.y) < 50;
   }
 }
 
@@ -169,7 +169,8 @@ class Ball2 extends Ball implements Moveable {
     }
     for (Thing c : thingsToCollide) {
       if (isTouching(c) && this != c) {
-     //   speedy *= -.7;
+     //   speedx = (x - c.x) * (speedx / (dist(x, y, c.x, c.y)));
+        speedy = (y - c.y) * (speedy / (dist(x, y, c.x, c.y)));
       }
     }
   }
