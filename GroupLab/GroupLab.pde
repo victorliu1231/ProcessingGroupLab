@@ -108,27 +108,21 @@ class Ball extends Thing implements Moveable {
   float speedx = random(6);
   float speedy = random(6);
   float[] col = {random(255), random(255), random(255)};
+  float og0 = col[0];
+  float og1 = col[1];
+  float og2 = col[2];
   Ball(float x, float y) {
     super(x, y);
   }
-  /*
-  boolean isTouching(Collideable object, float radius) {
-   //using radius to show that it's colliding.
-   if 
-   return true;
-   return false;
-   }
-   */
-
 
   boolean isTouching(Thing other) {
-    return dist(x, y, other.x, other.y) <= 10;
+    return dist(x, y, other.x, other.y) <= 50;
   }
   void display() {
-      ellipseMode(CENTER);
-      fill(col[0], col[1], col[2]);
-      ellipse(x, y, 50, 45);
-      ellipse(x, y, 45, 50);
+    ellipseMode(CENTER);
+    fill(col[0], col[1], col[2]);
+    ellipse(x, y, 50, 45);
+    ellipse(x, y, 45, 50);
   }
 
   void move() {
@@ -142,6 +136,17 @@ class Ball extends Thing implements Moveable {
       speedy *= -1;
     if (y < 0) 
       speedy *= -1;
+    for (Thing c : thingsToCollide) {
+      if (isTouching(c) && this != c) {
+        col[0] = 255;
+        col[1] = 0;
+        col[2] = 0;
+      } else {
+        col[0] = og0;
+        col[1] = og1;
+        col[2] = og2;
+      }
+    }
   }
 }
 
@@ -161,23 +166,30 @@ class Ball2 extends Ball implements Moveable {
 
 ArrayList<Displayable> thingsToDisplay;
 ArrayList<Moveable> thingsToMove;
+ArrayList<Thing> thingsToCollide;
 
 void setup() {
   size(1000, 800);
 
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
+  thingsToCollide = new ArrayList<Thing>();
   for (int i = 0; i < 10; i++) {
     Ball b = new Ball(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(b);
     thingsToMove.add(b);
     Rock r = new Rock(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(r);
+    thingsToCollide.add(r);
   }
   for (int i = 0; i < 3; i++) {
     LivingRock m = new LivingRock(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(m);
     thingsToMove.add(m);
+    thingsToCollide.add(m);
+    Ball2 b = new Ball2(50+random(width-100), 50+random(height-100));
+    thingsToDisplay.add(b);
+    thingsToMove.add(b);
   }
 }
 void draw() {
