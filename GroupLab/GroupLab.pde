@@ -218,7 +218,7 @@ class Ball2 extends Ball implements Moveable {
     for (Thing c : thingsToCollide) {
       if (isTouching(c) && this != c) {
         if ((x - c.x > 0 && speedx < 0) || (x - c.x < 0 && speedx > 0)) speedx *= -.98;
-        speedy = abs(y - c.y) * (speedy / (dist(x, y, c.x, c.y)));
+        speedy = (y - c.y) * (speedy / (dist(x, y, c.x, c.y)));
       }
     }
   }
@@ -230,7 +230,7 @@ ArrayList<Moveable> thingsToMove;
 ArrayList<Thing> thingsToCollide;
 
 void setup() {
-  size(500, 500);
+  size(1000, 1000);
   PImage rock = loadImage("rock.png");
   PImage stone = loadImage("stone.png");
   PImage ball = loadImage("bball.png");
