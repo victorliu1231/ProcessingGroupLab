@@ -25,15 +25,13 @@ abstract class Thing implements Displayable, Collideable {
 }
 
 class Rock extends Thing {
-  PImage rock = loadImage("rock.png");
-  PImage stone = loadImage("stone.png");
   PImage img;
-  Rock(float x, float y) {
+  Rock(float x, float y, PImage image) {
     super(x, y);
     if ((int)random(2) == 0) {
-      img = rock;
+      img = image;
     } else {
-      img = stone;
+      img = image;
     }
   }
 
@@ -44,12 +42,12 @@ class Rock extends Thing {
 }
 
 public class LivingRock extends Rock implements Moveable {
-  int[] path1X = new int[]{1, 1, 0, -1, -1, -1, 0, 1};
-  int[] path1Y = new int[]{0, -1, -1, -1, 0, 1, 1, 1};
-  int[] path2X = new int[]{0, 1, 1, 0, -1, 1, 1, 0};
-  int[] path2Y = new int[]{1, 1, 0, 1, 0, -1, 1, -1};
-  int[] path3X = new int[]{-1, 0, -1, 0, -1, 1, -1, -1};
-  int[] path3Y = new int[]{1, 1, 0, -1, 1, 1, 1, 0};
+  int[] path1X = new int[]{2, 1, 0, 2, 1, 2, 0, 1};
+  int[] path1Y = new int[]{0, 1, 2, 1, 0, 1, 2, 1};
+  int[] path2X = new int[]{0, 2, 1, 0, 2, 1, 1, 0};
+  int[] path2Y = new int[]{2, 1, 0, 1, 0, 2, 1, 1};
+  int[] path3X = new int[]{1, 0, 1, 0, 2, 1, 1, 2};
+  int[] path3Y = new int[]{1, 2, 0, 1, 1, 2, 1, 0};
 
   int[][] allPathsX = new int[][]{path1X, path2X, path3X};
   int[][] allPathsY = new int[][]{path1Y, path2Y, path3Y};
@@ -60,29 +58,78 @@ public class LivingRock extends Rock implements Moveable {
   int YMODE;
 
   int counter = 0;
-  LivingRock(float x, float y) {
-    super(x, y);
+  LivingRock(float x, float y, PImage image) {
+    super(x, y, image);
     randomNum = (int)random(3);
     randomPathX = allPathsX[randomNum];
     randomPathY = allPathsY[randomNum];
-    // MODE = 0;
+    XMODE = 0;
+    YMODE = 0;
   }
+  boolean isTouching(Thing other) {
+    return abs(x - (other.x - 10)) < 10 && abs(y - (other.y - 20)) < 10;
+  }
+  int isTouchingDetectSides(Thing other) {
+    if (abs(x - other.x) < 10) {
+      if (y - other.y <= -10 && y - other.y > 20) {
+        return 1; //ball hit the top part of collideable
+      }
+      if (y - other.y >= 10 && y - other.y < 20) {
+        return 3; //ball hit the bottom part of collideable
+      }
+    }
+    if (abs(y - other.y) < 10) {
+      if (x - other.x > -20 && x - other.x <= -10) {
+        return 2; //ball hit the left side of collideable
+      }
+      if (x - other.x < 20 && x - other.x >= 10) {
+        return 4; //ball hit the right side of collideable
+      }
+    }
+    return -1;
+  }
+  
   void move() {
-    int xIncr = randomPathX[counter] * (int)random(5);
-    int yIncr = randomPathX[counter] * (int)random(5);
-    if (x > width || x < 0) {
-      x += ((width - x) % 2)*(5);  
-      XMODE = (XMODE+1) % 2;
+    int xIncr = randomPathX[counter] * (int)random(6);
+    int yIncr = randomPathX[counter] * (int)random(6);
+    if (x + 30 > width || x < 0) {
+      if (x + 30 > width) {
+        x-= 10;
+      } else {
+        x+= 10;
+      }
+      XMODE++;
     }
-    if (y > height || y < 0) {
-      y += ((height - y) % 2)*(5);  
-      YMODE = (YMODE+1) % 2;
+    if (y + 30 > height || y < 0) {
+      if (y + 30 > height) {
+        y -= 10;
+      } else {
+        y += 10;
+      }
+      YMODE++;
     }
-    if (XMODE == 1) {
+    if (XMODE % 2 == 1) {
       xIncr *= -1;
     }
-    if (YMODE == 1) {
+    if (YMODE % 2 == 1) {
       yIncr *= -1;
+    }
+    for ( Thing c : thingsToCollide) {
+      if (this != c) {
+        if ( isTouchingDetectSides(c) == 1) {
+          YMODE++;
+          y-= 10;
+        } else if (isTouchingDetectSides(c) == 3){
+          YMODE++;
+          y+= 10;
+        } else if (isTouchingDetectSides(c) == 2){
+          XMODE++;
+          x-= 10;
+        } else if (isTouchingDetectSides(c) == 4){
+          XMODE++;
+          x+= 10;
+        }
+      }
     }
     x += xIncr;
     y += yIncr;
@@ -147,13 +194,14 @@ class Ball extends Thing implements Moveable {
 }
 
 class Ball2 extends Ball implements Moveable {
-  PImage ball = loadImage("bball.png");
-  Ball2(float x, float y) {
+  PImage img;
+  Ball2(float x, float y, PImage image) {
     super(x, y);
     speedy = 0;
+    img = image;
   }
   void display() {
-    image(ball, x, y, 50, 50);
+    image(img, x, y, 50, 50);
   }
   void move() {
     x += speedx;
@@ -169,7 +217,7 @@ class Ball2 extends Ball implements Moveable {
     }
     for (Thing c : thingsToCollide) {
       if (isTouching(c) && this != c) {
-        if((x - c.x > 0 && speedx < 0) || (x - c.x < 0 && speedx > 0)) speedx *= -.98;
+        if ((x - c.x > 0 && speedx < 0) || (x - c.x < 0 && speedx > 0)) speedx *= -.98;
         speedy = abs(y - c.y) * (speedy / (dist(x, y, c.x, c.y)));
       }
     }
@@ -182,25 +230,28 @@ ArrayList<Moveable> thingsToMove;
 ArrayList<Thing> thingsToCollide;
 
 void setup() {
-  size(1000, 800);
+  size(500, 500);
+  PImage rock = loadImage("rock.png");
+  PImage stone = loadImage("stone.png");
+  PImage ball = loadImage("bball.png");
 
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
   thingsToCollide = new ArrayList<Thing>();
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 5; i++) {
     Ball b = new Ball(50+random(width-100), 50+random(height-100));
     thingsToDisplay.add(b);
     thingsToMove.add(b);
-    Rock r = new Rock(50+random(width-100), 50+random(height-100));
+    Rock r = new Rock(50+random(width-100), 50+random(height-100), rock);
     thingsToDisplay.add(r);
     thingsToCollide.add(r);
   }
-  for (int i = 0; i < 3; i++) {
-    LivingRock m = new LivingRock(50+random(width-100), 50+random(height-100));
+  for (int i = 0; i < 5; i++) {
+    LivingRock m = new LivingRock(50+random(width-100), 50+random(height-100), stone);
     thingsToDisplay.add(m);
     thingsToMove.add(m);
     thingsToCollide.add(m);
-    Ball2 b = new Ball2(50+random(width-100), 50+random(height-100));
+    Ball2 b = new Ball2(50+random(width-100), 50+random(height-100), ball);
     thingsToDisplay.add(b);
     thingsToMove.add(b);
   }
