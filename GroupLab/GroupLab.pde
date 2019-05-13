@@ -88,7 +88,7 @@ public class LivingRock extends Rock implements Moveable {
     }
     return -1;
   }
-  
+
   void move() {
     int xIncr = randomPathX[counter] * (int)random(6);
     int yIncr = randomPathX[counter] * (int)random(6);
@@ -119,13 +119,13 @@ public class LivingRock extends Rock implements Moveable {
         if ( isTouchingDetectSides(c) == 1) {
           YMODE++;
           y-= 10;
-        } else if (isTouchingDetectSides(c) == 3){
+        } else if (isTouchingDetectSides(c) == 3) {
           YMODE++;
           y+= 10;
-        } else if (isTouchingDetectSides(c) == 2){
+        } else if (isTouchingDetectSides(c) == 2) {
           XMODE++;
           x-= 10;
-        } else if (isTouchingDetectSides(c) == 4){
+        } else if (isTouchingDetectSides(c) == 4) {
           XMODE++;
           x+= 10;
         }
@@ -195,10 +195,17 @@ class Ball extends Thing implements Moveable {
 
 class Ball2 extends Ball implements Moveable {
   PImage img;
-  Ball2(float x, float y, PImage image) {
+  PImage img2;
+  Ball2(float x, float y, PImage image, PImage image2) {
     super(x, y);
     speedy = 0;
-    img = image;
+    if ((int)random(1.0) == 1) {
+      img = image;
+    }
+    else {
+      img2 = image2;
+    }
+    
   }
   void display() {
     image(img, x, y, 50, 50);
@@ -234,6 +241,7 @@ void setup() {
   PImage rock = loadImage("rock.png");
   PImage stone = loadImage("stone.png");
   PImage ball = loadImage("bball.png");
+  PImage ball2 = loadImage("Baseball_(crop).jpg");
 
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
@@ -251,7 +259,7 @@ void setup() {
     thingsToDisplay.add(m);
     thingsToMove.add(m);
     thingsToCollide.add(m);
-    Ball2 b = new Ball2(50+random(width-100), 50+random(height-100), ball);
+    Ball2 b = new Ball2(50+random(width-100), 50+random(height-100), ball, ball2);
     thingsToDisplay.add(b);
     thingsToMove.add(b);
   }
