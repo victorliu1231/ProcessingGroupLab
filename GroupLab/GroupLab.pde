@@ -184,7 +184,7 @@ class Ball extends Thing implements Moveable {
         col[0] = 255;
         col[1] = 0;
         col[2] = 0;
-      } else if (dist(x, y, c.x, c.y) > 500) {
+      } else if (dist(x, y, c.x, c.y) > 750) {
         col[0] = og0;
         col[1] = og1;
         col[2] = og2;
