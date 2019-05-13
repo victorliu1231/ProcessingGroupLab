@@ -19,3 +19,4 @@ Jerry and Victor- debugging what happens when the rock hits the walls
 
 At Home:
 Victor - made rocks bounce off each other in correct direction with reasonable accuracy using Collideable
+Isabella - Made second ball class with a different form of bouncing, added Collideable, minor bug fixes as well
