@@ -33,4 +33,4 @@ Victor - made rocks bounce off each other in correct direction with reasonable a
 
 Isabella - Made second ball class with a different form of bouncing, added Collideable, minor bug fixes as well
 
-Minjun - Made a second ball image that was randomly chosen as the ball.
+Minjun - Made a second ball image that was randomly chosen as the ball. I don't know what else to add and I found that the skill level resulted in the differences of code produced. I tried to make an effort to contribute. 
