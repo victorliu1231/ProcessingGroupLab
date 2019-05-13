@@ -195,15 +195,14 @@ class Ball extends Thing implements Moveable {
 
 class Ball2 extends Ball implements Moveable {
   PImage img;
-  PImage img2;
   Ball2(float x, float y, PImage image, PImage image2) {
     super(x, y);
     speedy = 0;
-    if ((int)random(1.0) == 1) {
+    if ((int)random(2.0) == 1) {
       img = image;
     }
     else {
-      img2 = image2;
+      img = image2;
     }
     
   }
@@ -241,7 +240,7 @@ void setup() {
   PImage rock = loadImage("rock.png");
   PImage stone = loadImage("stone.png");
   PImage ball = loadImage("bball.png");
-  PImage ball2 = loadImage("Baseball_(crop).jpg");
+  PImage ball2 = loadImage("gball.png");
 
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
